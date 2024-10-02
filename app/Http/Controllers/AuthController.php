@@ -36,14 +36,23 @@ class AuthController extends Controller
     }
 
     public function loginForm() {
+        if (!empty(Auth::check())) {
+            return redirect()->back();
+        }
         return view('auth.login');
     }
 
     public function registerForm() {
+        if (!empty(Auth::check())) {
+            return redirect()->back();
+        }
         return view('auth.register');
     }
 
     public function forgotPasswordForm() {
+        if (!empty(Auth::check())) {
+            return redirect()->back();
+        }
         return view('auth.forgot-password');
     }
 
