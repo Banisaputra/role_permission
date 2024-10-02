@@ -9,153 +9,84 @@
 @endpush
 
 @section('content')
+{{-- modal add --}}
+<div class="modal fade" id="addRoleModal" data-bs-backdrop="static" tabindex="-1">
+   <div class="modal-dialog">
+      <form class="modal-content" id="ajaxRole">
+         @csrf
+         <div class="modal-header">
+            <h5 class="modal-title" id="addRoleModalTitle">Add Role</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <div class="row">
+               <div class="col mb-3">
+                  <label for="role_code" class="form-label">Role Code</label>
+                  <input type="text" id="role_code" name="role_code" class="form-control" placeholder="Enter Role Code">
+               </div>
+               <div class="col mb-3">
+                  <label for="role_name" class="form-label">Role Name</label>
+                  <input type="text" id="role_name" name="role_name" class="form-control" placeholder="Enter Role Name">
+               </div>
+            </div>
+            <div class="row g-2">
+               <div class="col mb-3">
+                  <label for="role_description" class="form-label">Description</label>
+                  <textarea type="text" id="role_description" name="role_description" class="form-control" placeholder="Description for User Role.."></textarea>
+               </div>
+            </div>
+            <div class="form-check form-switch mb-2">
+               <input class="form-check-input" type="checkbox" id="is_active" name="is_active" checked>
+               <label class="form-check-label" for="is_active">Activation</label>
+            </div>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+         </div>
+      </form>
+   </div>
+</div>
+{{-- end modal add --}}
 
 <div class="container-xxl flex-grow-1 container-p-y">
    <div class="row">
      <div class="col-lg-12 mb-4 order-0">
          <div class="card">
-            <h5 class="card-header">Striped rows</h5>
+            <div class="card-header">
+               <h5>User Role</h5>
+               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoleModal"><i class="bx bx-plus"></i> Add Data</button>
+            </div>
             <div class="table-responsive text-nowrap">
-            <table class="table table-striped">
-               <thead>
-                  <tr>
-                     <th>Project</th>
-                     <th>Client</th>
-                     <th>Users</th>
-                     <th>Status</th>
-                     <th>Actions</th>
-                  </tr>
-               </thead>
-               <tbody class="table-border-bottom-0">
-                  <tr>
-                  <td>
-                     <i class="bx bxl-angular bx-sm text-danger me-3"></i>
-                     <span class="fw-medium">Angular Project</span>
-                  </td>
-                  <td>Albert Cook</td>
-                  <td>
-                     <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Lilian Fuller" data-bs-original-title="Lilian Fuller">
-                        <img src="{{ asset('panel/assets/img/avatars/5.png')}}" alt="Avatar" class="rounded-circle">
-                        </li>
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Sophia Wilkerson" data-bs-original-title="Sophia Wilkerson">
-                        <img src="{{ asset('panel/assets/img/avatars/6.png')}}" alt="Avatar" class="rounded-circle">
-                        </li>
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Christina Parker" data-bs-original-title="Christina Parker">
-                        <img src="{{ asset('panel/assets/img/avatars/7.png')}}" alt="Avatar" class="rounded-circle">
-                        </li>
-                     </ul>
-                  </td>
-                  <td><span class="badge bg-label-primary me-1">Active</span></td>
-                  <td>
-                     <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                        </div>
-                     </div>
-                  </td>
-                  </tr>
-                  <tr>
-                  <td>
-                     <i class="bx bxl-react bx-sm text-info me-3"></i> <span class="fw-medium">React Project</span>
-                  </td>
-                  <td>Barry Hunter</td>
-                  <td>
-                     <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Lilian Fuller" data-bs-original-title="Lilian Fuller">
-                        <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle">
-                        </li>
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Sophia Wilkerson" data-bs-original-title="Sophia Wilkerson">
-                        <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle">
-                        </li>
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Christina Parker" data-bs-original-title="Christina Parker">
-                        <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle">
-                        </li>
-                     </ul>
-                  </td>
-                  <td><span class="badge bg-label-success me-1">Completed</span></td>
-                  <td>
-                     <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                        </div>
-                     </div>
-                  </td>
-                  </tr>
-                  <tr>
-                  <td>
-                     <i class="bx bxl-vuejs bx-sm text-success me-3"></i>
-                     <span class="fw-medium">VueJs Project</span>
-                  </td>
-                  <td>Trevor Baker</td>
-                  <td>
-                     <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Lilian Fuller" data-bs-original-title="Lilian Fuller">
-                        <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle">
-                        </li>
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Sophia Wilkerson" data-bs-original-title="Sophia Wilkerson">
-                        <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle">
-                        </li>
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Christina Parker" data-bs-original-title="Christina Parker">
-                        <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle">
-                        </li>
-                     </ul>
-                  </td>
-                  <td><span class="badge bg-label-info me-1">Scheduled</span></td>
-                  <td>
-                     <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                        </div>
-                     </div>
-                  </td>
-                  </tr>
-                  <tr>
-                  <td>
-                     <i class="bx bxl-bootstrap bx-sm text-primary me-3"></i>
-                     <span class="fw-medium">Bootstrap Project</span>
-                  </td>
-                  <td>Jerry Milton</td>
-                  <td>
-                     <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Lilian Fuller" data-bs-original-title="Lilian Fuller">
-                        <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle">
-                        </li>
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Sophia Wilkerson" data-bs-original-title="Sophia Wilkerson">
-                        <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle">
-                        </li>
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Christina Parker" data-bs-original-title="Christina Parker">
-                        <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle">
-                        </li>
-                     </ul>
-                  </td>
-                  <td><span class="badge bg-label-warning me-1">Pending</span></td>
-                  <td>
-                     <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                        </div>
-                     </div>
-                  </td>
-                  </tr>
-               </tbody>
-            </table>
+               <table class="table table-striped">
+                  <thead>
+                     <tr>
+                        <th width="5%">No.</th>
+                        <th width="15%">Code</th>
+                        <th >Name</th>
+                        <th width="20%" style="text-align: right">Users</th>
+                        <th width="20%">Status</th>
+                        <th width="10%">Actions</th>
+                     </tr>
+                  </thead>
+                  <tbody class="table-border-bottom-0">
+                     @for ($i = 1; $i <= 10; $i++)
+                        <tr>
+                           <td>{{$i}}</td>
+                           <td>Code{{$i}}</td>
+                           <td>Role{{$i}}</td>
+                           <td style="text-align: right">{{$i}} Employee</td>
+                           <td><span class="badge {{ $i < 5 ? 'bg-label-success' : 'bg-label-secondary' }}">
+                              {{ $i < 5 ? 'Active' : 'Deactive' }}
+                           </span></td>
+                           <td>
+                              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoleModal">Edit</button>
+                              <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                           </td>
+                        </tr>
+                     @endfor
+                  </tbody>
+               </table>
             </div>
          </div>
      </div>
@@ -165,5 +96,39 @@
  @endsection
 
 @push('js')
-    {{-- <script src=""></script> --}}
+   <script>
+      $(document).ready(function() {
+         $('#ajaxRole').on('submit', function(e) {
+            e.preventDefault();
+            var formData = new FormData($(this)[0]);
+            $.ajax({
+               url: "{{ route('role.store') }}",
+               type: 'POST',
+               data: formData,
+               contentType: false,
+               processData: false,
+               success: function(response) {
+                  console.log(response);
+                  if (response.success) {
+                     Swal.fire({
+                        position: 'center',
+                        icon:'success',
+                        title: response.message,
+                        showConfirmButton: false,
+                        timer: 5500,
+                        z-index: 100
+                     });
+                     $('#addRoleModal').modal('hide');
+                  } else {
+                     Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: response.message
+                     });
+                  }
+               }
+            });
+         })
+      });
+   </script>
 @endpush

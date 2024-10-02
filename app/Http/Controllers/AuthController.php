@@ -29,7 +29,7 @@ class AuthController extends Controller
         $remember = !empty($request->rememberMe) ? true : false;
 
         if(Auth::attempt($credentials, $remember)) {
-            return redirect('panel/dashboard');
+            return redirect()->route('dashboard');
         } else {
             return redirect()->back()->with('error', 'Please enter current email or password');
         }
@@ -37,7 +37,7 @@ class AuthController extends Controller
 
     public function loginForm() {
         if (!empty(Auth::check())) {
-            return redirect()->back();
+            return redirect()->route('dashboard');
         }
         return view('auth.login');
     }
