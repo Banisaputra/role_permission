@@ -61,8 +61,8 @@
 
   <ul class="menu-inner py-1">
     <!-- Dashboards -->
-    <li class="menu-item active">
-      <a href="{{ route('dashboard')}}" class="menu-link">
+    <li class="menu-item" >
+      <a href="{{ route('dashboard')}}" class="menu-link" data-url="/panel/dashboard">
         <i class="menu-icon tf-icons bx bx-home-circle"></i>
         <div data-i18n="Dashboards">Dashboards</div>
       </a>
@@ -75,23 +75,17 @@
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="{{ route('role.index')}}" class="menu-link">
-            <div data-i18n="Without menu">User Role</div>
+          <a href="{{ route('role.index')}}" class="menu-link" data-url="/panel/role">
+            <div data-i18n="Without menu">Roles</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="#" class="menu-link">
-            <div data-i18n="Without navbar">User Permission</div>
-          </a>
-        </li>
-        <li class="menu-item">
-          <a href="#" class="menu-link">
-            <div data-i18n="Container">Role Permission</div>
+          <a href="#" class="menu-link" data-url="/panel/permission">
+            <div data-i18n="Without navbar">Permissions</div>
           </a>
         </li>
       </ul>
     </li>
-
     <li class="menu-header small text-uppercase">
       <span class="menu-header-text">Apps &amp; Pages</span>
     </li>

@@ -7,6 +7,18 @@
 let menu, animate;
 
 (function () {
+  // active menu
+  var currentPath = window.location.pathname;
+  $('.menu-item').each(function() {
+
+      var menuLink = $(this).find('.menu-link').data('url');
+     
+      if (menuLink === currentPath ) {
+          $(this).closest('.menu-item').closest('.menu-sub').closest('.menu-item').addClass('active open');
+          $(this).addClass('active');
+      }
+  });
+
   // Initialize menu
   //-----------------
 
