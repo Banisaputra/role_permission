@@ -9,11 +9,13 @@
 @endpush
 
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 {{-- modal add --}}
 <div class="modal fade" id="addRoleModal" data-bs-backdrop="static" tabindex="-1">
    <div class="modal-dialog">
       <form class="modal-content" id="ajaxRole">
-         @csrf
+         <input type="hidden" id="role_id" name="role_id">
+         
          <div class="modal-header">
             <h5 class="modal-title" id="addRoleModalTitle">Add Role</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -23,10 +25,12 @@
                <div class="col mb-3">
                   <label for="role_code" class="form-label">Role Code</label>
                   <input type="text" id="role_code" name="role_code" class="form-control" placeholder="Enter Role Code">
+                  <span class="text-danger" id="role_code_error"></span>
                </div>
                <div class="col mb-3">
                   <label for="role_name" class="form-label">Role Name</label>
                   <input type="text" id="role_name" name="role_name" class="form-control" placeholder="Enter Role Name">
+                  <span class="text-danger" id="role_name_error"></span>
                </div>
             </div>
             <div class="row g-2">
@@ -70,21 +74,21 @@
                      </tr>
                   </thead>
                   <tbody class="table-border-bottom-0">
-                     @for ($i = 1; $i <= 10; $i++)
+                     @foreach ($roles as $key => $role)
                         <tr>
-                           <td>{{$i}}</td>
-                           <td>Code{{$i}}</td>
-                           <td>Role{{$i}}</td>
-                           <td style="text-align: right">{{$i}} Employee</td>
-                           <td><span class="badge {{ $i < 5 ? 'bg-label-success' : 'bg-label-secondary' }}">
-                              {{ $i < 5 ? 'Active' : 'Deactive' }}
+                           <td>{{$key + 1}}.</td>
+                           <td>{{$role->role_code}}</td>
+                           <td>{{$role->role_name}}</td>
+                           <td style="text-align: right">{{$role->id}} Employee</td>
+                           <td><span class="badge {{ $role->is_active == 1 ? 'bg-label-success' : 'bg-label-secondary' }}">
+                              {{ $role->is_active == 1 ? 'Active' : 'Deactive' }}
                            </span></td>
                            <td>
-                              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoleModal">Edit</button>
-                              <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                              <button type="button" class="btn btn-sm btn-primary btn-edit" data-id="{{ $role->id }}">Edit</button>
+                              <a href="{{ route('role.destroy', $role->id) }}" class="btn btn-sm btn-danger" data-confirm-delete="true">Delete</a>
                            </td>
                         </tr>
-                     @endfor
+                     @endforeach
                   </tbody>
                </table>
             </div>
@@ -93,7 +97,7 @@
    </div>
 </div>
 
- @endsection
+@endsection
 
 @push('js')
    <script>
@@ -101,34 +105,65 @@
          $('#ajaxRole').on('submit', function(e) {
             e.preventDefault();
             var formData = new FormData($(this)[0]);
+            let roleId = $('#role_id').val();
+            let storeUrl = "{{ route('role.store') }}";
+            let editUrl = "{{ route('role.update', ':id') }}";
+            if(roleId != "") {
+               storeUrl = editUrl.replace(':id', roleId);
+               formData.append('_method', 'PUT');
+            }
+            
             $.ajax({
-               url: "{{ route('role.store') }}",
+               headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               url: storeUrl,
                type: 'POST',
                data: formData,
                contentType: false,
                processData: false,
                success: function(response) {
-                  console.log(response);
-                  if (response.success) {
-                     Swal.fire({
-                        position: 'center',
-                        icon:'success',
-                        title: response.message,
-                        showConfirmButton: false,
-                        timer: 5500,
-                        z-index: 100
-                     });
-                     $('#addRoleModal').modal('hide');
+                  location.reload();
+               },
+               error: function(xhr) {
+                  let errors = xhr.responseJSON.errors;
+                  if (errors.role_code) {
+                     $('#role_code_error').text(errors.role_code[0]);
                   } else {
-                     Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: response.message
-                     });
+                     $('#role_code_error').text('');  // Clear previous error
+                  }
+                  if (errors.role_name) {
+                     $('#role_name_error').text(errors.role_name[0]);
+                  } else {
+                     $('#role_name_error').text('');  // Clear previous error
                   }
                }
             });
+            
          })
+
+         $(document).on('click', '.btn-edit', function() {
+            var roleId = $(this).data('id');
+            let url = "{{route('role.edit', ':id')}}"
+            $.ajax({
+               url: url.replace(':id', roleId),
+               method: 'GET',
+               success: function(response) {
+                     $('#role_id').val(response.id);
+                     $('#role_code').val(response.role_code);
+                     $('#role_name').val(response.role_name);
+                     $('#role_description').val(response.role_description);
+                     $('#is_active').prop('checked', response.is_active == 1);
+
+                     // Show the edit modal
+                     $('#addRoleModal').modal('show');
+               },
+               error: function(xhr) {
+                     alert('Unable to fetch role data');
+               }
+            });
+         });
+
       });
    </script>
 @endpush

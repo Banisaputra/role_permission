@@ -1,2 +1,32 @@
 # role
 - validasi error message
+
+
+#Dashboard
+
+#user
+add user
+edit user
+delete user
+
+#role
+add role
+edit role
+delete role
+
+#category
+add category
+edit category
+delete category
+
+#sub category
+add sub category
+edit sub category
+delete sub category
+
+#product
+add product
+edit product
+delete product
+
+#setting
