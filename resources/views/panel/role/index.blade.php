@@ -43,6 +43,10 @@
                <input class="form-check-input" type="checkbox" id="is_active" name="is_active" checked>
                <label class="form-check-label" for="is_active">Activation</label>
             </div>
+            <hr>
+            <a href="{{ route('rolePermission', ':id')}}" id="manage_permission">
+               <button type="button" class="btn btn-outline-primary btn-manage-permission" disabled>Manage Permission</button>
+            </a>
          </div>
          <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
@@ -144,7 +148,10 @@
 
          $(document).on('click', '.btn-edit', function() {
             var roleId = $(this).data('id');
+            let managePsUrl = "{{ route('rolePermission', ':id')}}"
             let url = "{{route('role.edit', ':id')}}"
+            $('#manage_permission').prop('href', managePsUrl.replace(':id', roleId));
+            $('.btn-manage-permission').prop('disabled', false);
             $.ajax({
                url: url.replace(':id', roleId),
                method: 'GET',

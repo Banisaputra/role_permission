@@ -80,7 +80,7 @@
           </a>
         </li>
         <li class="menu-item">
-          <a href="#" class="menu-link" data-url="/panel/permission">
+          <a href="{{ route('permission.index')}}" class="menu-link" data-url="/panel/permission">
             <div data-i18n="Without navbar">Permissions</div>
           </a>
         </li>
@@ -91,10 +91,7 @@
     </li>
     <!-- Apps -->
     <li class="menu-item">
-      <a
-        href="#"
-        target="_blank"
-        class="menu-link">
+      <a href="#" target="_blank" class="menu-link" data-url="/panel/chat">
         <i class="menu-icon tf-icons bx bx-chat"></i>
         <div data-i18n="Chat">Chat</div>
         <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">Pro</div>

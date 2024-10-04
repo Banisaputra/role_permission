@@ -91,4 +91,13 @@ class RoleController extends Controller
 
         return redirect()->back();
     }
+
+    public function roleHasPermission($roleId) {
+        $role = Role::find($roleId);
+        if (!$role) {
+            abort(404);
+        }
+        
+        return view('panel.role.asign_permission', compact('role'));
+    }
 }
